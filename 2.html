@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .left{grid-area: left;}
+        .right{grid-area: right;}
+
+        .grid-container{
+            display: grid;
+            grid-template-areas:
+            'left right right right'
+            ;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        #minta{
+            width: 200px;
+            height: 200px;
+            background-color: white;
+            border: 4px solid black;
+        }
+
+        .right{
+            background-color: grey;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="left">
+            <figure id="minta">
+
+            </figure>
+        </div>
+        <div class="right" >
+            <form onchange="mintaGeneral(this)">
+                <fieldset>
+                    <legend>Background:</legend>
+                    
+                    <input type="radio" id="bg-gray" name="backgroundColor" value="gray">
+                    <label for="bg-gray">Gray</label>
+                    <input type="radio" id="bg-red" name="backgroundColor" value="red">
+                    <label for="bg-red">Red</label>
+                    <input type="radio" id="bg-blue" name="backgroundColor" value="blue">
+                    <label for="bg-blue">Blue</label>
+                </fieldset>
+    
+                <fieldset>
+                    <legend>Border Color:</legend>
+                    
+                    <input type="radio" id="border-gray" name="borderColor" value="gray">
+                    <label for="border-gray">Gray</label>
+                    <input type="radio" id="border-red" name="borderColor" value="red">
+                    <label for="border-red">Red</label>
+                    <input type="radio" id="border-blue" name="borderColor" value="blue">
+                    <label for="border-blue">Blue</label>
+                </fieldset>
+    
+                <!-- <fieldset>
+                    <legend>Sarkítás:</legend>
+                    
+                    <input type="radio" id="solid" name="option">
+                    <label for="solid">szilárd</label>
+                    <input type="radio" id="striped" name="option">
+                    <label for="striped">csíkozott</label>
+                    <input type="radio" id="dotted" name="option">
+                    <label for="dotted">pontozott</label>
+                </fieldset> -->
+            </form>
+            
+        </div>
+    </div>
+    
+
+    <script>
+        let mintaElem = null;
+        let mintaTimer = null;
+        let mintaIrany = 1
+        let mintaX = 0;
+
+        window.onload = function(e){
+            mintaElem = document.getElementById('minta')
+        }
+
+        function mintaGeneral(f){
+            e = f.elements;
+            if (mintaElem){
+                // for (let i = 0; i < e.length; i++) {
+                // if (e[i].type === "radio" && e[i].checked) {
+                //     if (e[i].name === "bg-color") {
+                //         // Set background color
+                //         mintaElem.style.backgroundColor = e[i].value;
+                //     } else if (e[i].name === "border-color") {
+                //         // Set border color
+                //         mintaElem.style.borderColor = e[i].value;
+                //         }
+                //     }
+                // }
+                for (let i = 0; i < e.length; i++) {
+                    if(e[i].type.toUpperCase() != "RADIO" || e[i].checked){
+                        mintaElem.style[e[i].name] = e[i].value;
+                    }
+                    
+                }
+            }
+        }
+        function mintaMozog(f){
+
+        }
+
+        // const bgRadios = document.querySelectorAll('input[name="bg-color"]');
+        //     bgRadios.forEach(radio => {
+        //         radio.addEventListener('change', function() {
+        //             mintaElem.style.backgroundColor = this.value;
+        //         });
+        //     });
+
+        //     const borderRadios = document.querySelectorAll('input[name="border-color"]');
+        //     borderRadios.forEach(radio => {
+        //         radio.addEventListener('change', function() {
+        //             mintaElem.style.borderColor = this.value;
+        //         });
+        //     });
+    </script>
+</body>
+</html>
