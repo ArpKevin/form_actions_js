@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #passwordButton{
+        margin-left: 15px;
+    }
+</style>
+<body>
+    <div>
+        <form>
+            <header>
+                <h1>Bejelentkezés</h1>
+                <p>Adja meg a bejelentkezéshez szükséges adatokat</p>
+            </header>
+            <fieldset>
+             <!-- <legend>Personalia:</legend> -->
+             <label for="login">Login:</label>
+             <input type="text" id="login" name="login"><br><br>
+             <label for="pass">Password:</label>
+             <input type="password" id="pass" name="pass"><input type="button" value="Megnéz" onclick="revealPass(this.form)" id="passwordButton"><br><br>
+             <!-- <label for="email">Email:</label>
+             <input type="email" id="email" name="email"><br><br>
+             <label for="birthday">Birthday:</label>
+             <input type="date" id="birthday" name="birthday"><br><br> -->
+             <input type="button" value="Bejelentkezés" onclick="loginBe(this.form)"> 
+            </fieldset>
+            <output id="outputField"></output>
+           </form>
+    </div>
+
+    <script>
+        function loginBe(f){
+            document.getElementById('outputField').innerHTML = `Belépés: ${f.login.value}, kód: ${f.pass.value}`;
+            f.pass.style.backgroundColor = f.pass.value == "alma" ? "red" : "green";
+            f.login.style.backgroundColor = f.login.value.length < 10 ? "yellow" : "white"; 
+        }
+        function revealPass(f){
+            let passwordField = f.pass;
+            passwordField.type = passwordField.type == "text" ? "password" : "text";
+        }
+    </script>
+</body>
+</html>
