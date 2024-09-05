@@ -23,11 +23,13 @@
              <input type="text" id="login" name="login"><br><br>
              <label for="pass">Password:</label>
              <input type="password" id="pass" name="pass"><input type="button" value="Megnéz" onclick="revealPass(this.form)" id="passwordButton"><br><br>
+             <label for="birthYear">Születési év:</label>
+             <input type="text" id="birthYear" name="birthYear"><br><br>
              <!-- <label for="email">Email:</label>
              <input type="email" id="email" name="email"><br><br>
              <label for="birthday">Birthday:</label>
              <input type="date" id="birthday" name="birthday"><br><br> -->
-             <input type="button" value="Bejelentkezés" onclick="loginBe(this.form)"> 
+             <input type="button" value="Bejelentkezés" onclick="loginBe(this.form)">
             </fieldset>
             <output id="outputField"></output>
            </form>
@@ -35,6 +37,12 @@
 
     <script>
         function loginBe(f){
+            let yearOfBirth = f.birthYear.value;
+
+            const d = new Date();
+            let currentDate = d.getFullYear();
+            console.log(`${currentDate - yearOfBirth} éves vagy`);
+
             document.getElementById('outputField').innerHTML = `Belépés: ${f.login.value}, kód: ${f.pass.value}`;
             f.pass.style.backgroundColor = f.pass.value == "alma" ? "red" : "green";
             f.login.style.backgroundColor = f.login.value.length < 10 ? "yellow" : "white"; 
