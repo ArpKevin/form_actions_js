@@ -18,29 +18,33 @@
             mintaGeneral(document.querySelector('form'));
         }
 
-        function mintaGeneral(f){
+        // REGEX SOLUTION
+        // function kebabToCamel(kebab) {
+        //     return kebab.replace(/-./g, match => match.charAt(1).toUpperCase());
+        // }
 
-            e = f.elements;
-            if (mintaElem){
-                // for (let i = 0; i < e.length; i++) {
-                // if (e[i].type === "radio" && e[i].checked) {
-                //     if (e[i].name === "bg-color") {
-                //         // Set background color
-                //         mintaElem.style.backgroundColor = e[i].value;
-                //     } else if (e[i].name === "border-color") {
-                //         // Set border color
-                //         mintaElem.style.borderColor = e[i].value;
-                //         }
-                //     }
-                // }
-                for (let i = 0; i < e.length; i++) {
-                    if(e[i].type.toUpperCase() != "RADIO" || e[i].checked){
-                        mintaElem.style[e[i].name] = e[i].value;
-                    }
-                    
-                }
-            }
-        }
+
+        // function mintaGeneral(f) {
+        //     const e = f.elements;
+        //     if (mintaElem) {
+        //         for (let i = 0; i < e.length; i++) {
+        //             if (e[i].type.toUpperCase() !== "RADIO" || e[i].checked) {
+        //                 let property = e[i].name;
+        //                 let value = e[i].value;
+
+        //                 console.log(property)
+        //                 console.log(value)
+
+        //                 let jsProperty = kebabToCamel(property);
+
+        //                 mintaElem.style[jsProperty] = value;
+
+        //                 console.log(kebabToCamel("background-color-test"));
+        //             }
+        //         }
+        //     }
+        // }
+
         function mintaMozog(f){
             mintaDeg++;
 
@@ -107,55 +111,55 @@
                 <fieldset>
                     <legend>Háttér:</legend>
                     
-                    <input type="radio" id="bg-gray" name="backgroundColor" value="gray">
+                    <input type="radio" id="bg-gray" name="background-color" value="gray">
                     <label for="bg-gray">Gray</label>
-                    <input type="radio" id="bg-red" name="backgroundColor" value="red">
+                    <input type="radio" id="bg-red" name="background-color" value="red">
                     <label for="bg-red">Red</label>
-                    <input type="radio" id="bg-blue" name="backgroundColor" value="blue">
+                    <input type="radio" id="bg-blue" name="background-color" value="blue">
                     <label for="bg-blue">Blue</label>
                 </fieldset>
     
                 <fieldset>
                     <legend>Szegély szín:</legend>
                     
-                    <input type="radio" id="border-gray" name="borderColor" value="gray">
+                    <input type="radio" id="border-gray" name="border-color" value="gray">
                     <label for="border-gray">Gray</label>
-                    <input type="radio" id="border-red" name="borderColor" value="red">
+                    <input type="radio" id="border-red" name="border-color" value="red">
                     <label for="border-red">Red</label>
-                    <input type="radio" id="border-blue" name="borderColor" value="blue">
+                    <input type="radio" id="border-blue" name="border-color" value="blue">
                     <label for="border-blue">Blue</label>
                 </fieldset>
 
                 <fieldset>
                     <legend>Szegély stílus:</legend>
                     
-                    <input type="radio" id="border-solid" name="borderStyle" value="solid">
+                    <input type="radio" id="border-solid" name="border-style" value="solid">
                     <label for="solid">Szilárd</label>
-                    <input type="radio" id="border-dotted" name="borderStyle" value="dotted" checked>
+                    <input type="radio" id="border-dotted" name="border-style" value="dotted" checked>
                     <label for="dotted">Pontozott</label>
-                    <input type="radio" id="border-double" name="borderStyle" value="double">
+                    <input type="radio" id="border-double" name="border-style" value="double">
                     <label for="double">Dupla</label>
                 </fieldset>
 
                 <fieldset>
                     <legend>Sarkítás:</legend>
                     
-                    <input type="radio" id="border-radius-0" name="borderRadius" value="0%">
+                    <input type="radio" id="border-radius-0" name="border-radius" value="0%">
                     <label for="solid">Nincs</label>
-                    <input type="radio" id="border-radius-25" name="borderRadius" value="25%">
+                    <input type="radio" id="border-radius-25" name="border-radius" value="25%">
                     <label for="dotted">25%</label>
-                    <input type="radio" id="border-radius-50" name="borderRadius" value="50%" checked>
+                    <input type="radio" id="border-radius-50" name="border-radius" value="50%" checked>
                     <label for="double">50%</label>
                 </fieldset>
 
                 <fieldset>
                     <legend>Árnyék:</legend>
                     
-                    <input type="radio" id="border-shadow-0" name="boxShadow" value="0 0 0 0 black">
+                    <input type="radio" id="border-shadow-0" name="box-shadow" value="0 0 0 0 black">
                     <label for="border-shadow-0">Nincs</label>
-                    <input type="radio" id="border-shadow-10" name="boxShadow" value="5px 5px 10px 0 black">
+                    <input type="radio" id="border-shadow-10" name="box-shadow" value="5px 5px 10px 0 black">
                     <label for="border-shadow-10">10 px</label>
-                    <input type="radio" id="border-shadow-20" name="boxShadow" value="10px 10px 20px 0 black">
+                    <input type="radio" id="border-shadow-20" name="box-shadow" value="10px 10px 20px 0 black">
                     <label for="border-shadow-20">20 px</label>
                 </fieldset>
 

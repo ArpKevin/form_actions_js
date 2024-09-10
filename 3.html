@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let testString = "background-color";
+
+        function bont(szoveg) {
+            let result = '';
+            let capitalizeNext = false;
+
+            for (let i = 0; i < szoveg.length; i++) {
+                if (szoveg[i] === '-') {
+                    capitalizeNext = true;
+                } else {
+                    if (capitalizeNext) {
+                        result += szoveg[i].toUpperCase();
+                        capitalizeNext = false;
+                    } else {
+                        result += szoveg[i];
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        function bont2(szoveg){
+            let result = "";
+
+            let szavak = szoveg.split("-");
+
+            let asd = "asdas";
+            console.log(typeof(asd));
+
+            for (let i = 0; i < szavak.length; i++) {
+                console.log(typeof(szavak[i]));
+            }
+
+            result += szavak[0];
+
+            for (i = 1; i < szavak.length; i++){
+                result += szavak[i].replace(szavak[i][0], szavak[i][0].toUpperCase());
+            }
+            return result;
+        }
+
+        console.log(bont2(testString));
+
+    </script>
+</head>
+<body>
+</body>
+</html>
