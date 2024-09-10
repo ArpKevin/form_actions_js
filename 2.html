@@ -4,15 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <script>
+        let counter = 0;
+        let mintaX = 0;
+        let mintaTimer = null;
+        let mintaDeg = 1;
+        let reachedBorder = false;
+
+
+        window.onload = function(e){
+            mintaElem = document.getElementById('minta');
+            mintaGeneral(document.querySelector('form'));
+        }
+
+        function mintaGeneral(f){
+
+            e = f.elements;
+            if (mintaElem){
+                // for (let i = 0; i < e.length; i++) {
+                // if (e[i].type === "radio" && e[i].checked) {
+                //     if (e[i].name === "bg-color") {
+                //         // Set background color
+                //         mintaElem.style.backgroundColor = e[i].value;
+                //     } else if (e[i].name === "border-color") {
+                //         // Set border color
+                //         mintaElem.style.borderColor = e[i].value;
+                //         }
+                //     }
+                // }
+                for (let i = 0; i < e.length; i++) {
+                    if(e[i].type.toUpperCase() != "RADIO" || e[i].checked){
+                        mintaElem.style[e[i].name] = e[i].value;
+                    }
+                    
+                }
+            }
+        }
+        function mintaMozog(f){
+            mintaDeg++;
+            
+            let gridContainer = document.getElementsByClassName('grid-container')[0];
+            let gridContainerPaddingLeft = parseInt(window.getComputedStyle(gridContainer).paddingLeft);
+            // console.log(containerPaddingLeft); -> 10px
+            let gridContainerGap = parseInt(window.getComputedStyle(gridContainer).gap);
+            // console.log(gap); -> 30
+            let mintaelemMarginLeft = parseInt(window.getComputedStyle(mintaElem).marginLeft);
+            // console.log(mintaelemMarginLeft); -> 40px
+
+            let containerWidth = divBorder.clientWidth - 2 * containerPadding - 2 * containerMargin;
+            
+            if(!reachedBorder) mintaX += 2; else mintaX -= 2;
+            
+            mintaElem.innerHTML = `<h1>${mintaX}</h1>`;
+            mintaElem.style.left = `${mintaX}px`;
+            mintaElem.style.transform = `rotate(${mintaDeg}deg)`;
+
+            if (mintaX >= containerWidth - mintaElem.offsetWidth || mintaX <= 0) reachedBorder = !reachedBorder;
+        }
+    </script>
+
     <style>
         .left{grid-area: left;}
         .right{grid-area: right;}
 
-        .grid-container{
+        .grid-container {
             display: grid;
-            grid-template-areas:
-            'left right right right'
-            ;
+            grid-template-areas: 'left right right right';
+            gap: 30px; /* Grid gap */
+            padding: 10px; /* Padding of the grid container */
         }
 
         #minta{
@@ -20,7 +80,7 @@
             height: 200px;
             background-color: white;
             border: 4px solid black;
-            margin: 0;
+            /* margin: 0; */
         }
 
         .right{
@@ -81,7 +141,7 @@
                     
                     <input type="radio" id="border-solid" name="borderStyle" value="solid">
                     <label for="solid">Szilárd</label>
-                    <input type="radio" id="border-dotted" name="borderStyle" value="dotted">
+                    <input type="radio" id="border-dotted" name="borderStyle" value="dotted" checked>
                     <label for="dotted">Pontozott</label>
                     <input type="radio" id="border-double" name="borderStyle" value="double">
                     <label for="double">Dupla</label>
@@ -94,7 +154,7 @@
                     <label for="solid">Nincs</label>
                     <input type="radio" id="border-radius-25" name="borderRadius" value="25%">
                     <label for="dotted">25%</label>
-                    <input type="radio" id="border-radius-50" name="borderRadius" value="50%">
+                    <input type="radio" id="border-radius-50" name="borderRadius" value="50%" checked>
                     <label for="double">50%</label>
                 </fieldset>
 
@@ -120,55 +180,5 @@
             
         </div>
     </div>
-    
-
-    <script>
-        let counter = 0;
-        let mintaX = 0;
-        let mintaTimer = null;
-        let mintaElement = null;
-        let mintaDirection = 1;
-        let reachedBorder = false;
-
-
-        window.onload = function(e){
-            mintaElem = document.getElementById('minta')
-        }
-
-        function mintaGeneral(f){
-
-            e = f.elements;
-            if (mintaElem){
-                // for (let i = 0; i < e.length; i++) {
-                // if (e[i].type === "radio" && e[i].checked) {
-                //     if (e[i].name === "bg-color") {
-                //         // Set background color
-                //         mintaElem.style.backgroundColor = e[i].value;
-                //     } else if (e[i].name === "border-color") {
-                //         // Set border color
-                //         mintaElem.style.borderColor = e[i].value;
-                //         }
-                //     }
-                // }
-                for (let i = 0; i < e.length; i++) {
-                    if(e[i].type.toUpperCase() != "RADIO" || e[i].checked){
-                        mintaElem.style[e[i].name] = e[i].value;
-                    }
-                    
-                }
-            }
-        }
-        function mintaMozog(f){
-            
-            let divBorder = document.getElementsByClassName('left')[0];
-            
-            if(!reachedBorder) mintaX += 2; else mintaX -= 2;
-            
-            mintaElem.innerHTML = `<h1>${mintaX}</h1>`;
-            mintaElem.style.left = `${mintaX}px`;
-
-            if (mintaX >= divBorder.offsetWidth - mintaElem.offsetWidth || mintaX <= 0) reachedBorder = !reachedBorder;
-        }
-    </script>
 </body>
 </html>
