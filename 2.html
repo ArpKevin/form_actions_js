@@ -13,8 +13,6 @@
             grid-template-areas:
             'left right right right'
             ;
-            gap: 10px;
-            padding: 10px;
         }
 
         #minta{
@@ -22,24 +20,42 @@
             height: 200px;
             background-color: white;
             border: 4px solid black;
+            margin: 0;
         }
 
         .right{
             background-color: grey;
         }
+
+        #minta{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
     <div class="grid-container">
-        <div class="left">
-            <figure id="minta">
-
+        <div class="left" style="position: relative;">
+            <figure id="minta" style="position: absolute;" onclick="if(mintaTimer === null) { mintaTimer=setInterval(mintaMozog, 50); }">
+                <h1>TEXT</h1>
             </figure>
         </div>
-        <div class="right" >
+        <div class="right">
             <form onchange="mintaGeneral(this)">
                 <fieldset>
-                    <legend>Background:</legend>
+                    <legend>Szín:</legend>
+                    
+                    <input type="radio" id="color-gray" name="color" value="gray">
+                    <label for="color-gray">Gray</label>
+                    <input type="radio" id="color-red" name="color" value="red">
+                    <label for="color-red">Red</label>
+                    <input type="radio" id="color-blue" name="color" value="blue">
+                    <label for="color-blue">Blue</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Háttér:</legend>
                     
                     <input type="radio" id="bg-gray" name="backgroundColor" value="gray">
                     <label for="bg-gray">Gray</label>
@@ -50,7 +66,7 @@
                 </fieldset>
     
                 <fieldset>
-                    <legend>Border Color:</legend>
+                    <legend>Szegély szín:</legend>
                     
                     <input type="radio" id="border-gray" name="borderColor" value="gray">
                     <label for="border-gray">Gray</label>
@@ -59,17 +75,47 @@
                     <input type="radio" id="border-blue" name="borderColor" value="blue">
                     <label for="border-blue">Blue</label>
                 </fieldset>
-    
-                <!-- <fieldset>
+
+                <fieldset>
+                    <legend>Szegély stílus:</legend>
+                    
+                    <input type="radio" id="border-solid" name="borderStyle" value="solid">
+                    <label for="solid">Szilárd</label>
+                    <input type="radio" id="border-dotted" name="borderStyle" value="dotted">
+                    <label for="dotted">Pontozott</label>
+                    <input type="radio" id="border-double" name="borderStyle" value="double">
+                    <label for="double">Dupla</label>
+                </fieldset>
+
+                <fieldset>
                     <legend>Sarkítás:</legend>
                     
-                    <input type="radio" id="solid" name="option">
-                    <label for="solid">szilárd</label>
-                    <input type="radio" id="striped" name="option">
-                    <label for="striped">csíkozott</label>
-                    <input type="radio" id="dotted" name="option">
-                    <label for="dotted">pontozott</label>
-                </fieldset> -->
+                    <input type="radio" id="border-radius-0" name="borderRadius" value="0%">
+                    <label for="solid">Nincs</label>
+                    <input type="radio" id="border-radius-25" name="borderRadius" value="25%">
+                    <label for="dotted">25%</label>
+                    <input type="radio" id="border-radius-50" name="borderRadius" value="50%">
+                    <label for="double">50%</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Árnyék:</legend>
+                    
+                    <input type="radio" id="border-shadow-0" name="boxShadow" value="0 0 0 0 black">
+                    <label for="border-shadow-0">Nincs</label>
+                    <input type="radio" id="border-shadow-10" name="boxShadow" value="5px 5px 10px 0 black">
+                    <label for="border-shadow-10">10 px</label>
+                    <input type="radio" id="border-shadow-20" name="boxShadow" value="10px 10px 20px 0 black">
+                    <label for="border-shadow-20">20 px</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Forgatás:</legend>
+
+                    <label><input type="radio" id="transform-0" name="transform" value="rotate(0deg)">Nincs</label>
+                    <label><input type="radio" id="transform-25" name="transform" value="rotate(25deg)">25 fok</label>
+                    <label><input type="radio" id="transform-50" name="transform" value="rotate(50deg)">50 fok</label>
+                </fieldset>
             </form>
             
         </div>
@@ -77,16 +123,20 @@
     
 
     <script>
-        let mintaElem = null;
-        let mintaTimer = null;
-        let mintaIrany = 1
+        let counter = 0;
         let mintaX = 0;
+        let mintaTimer = null;
+        let mintaElement = null;
+        let mintaDirection = 1;
+        let reachedBorder = false;
+
 
         window.onload = function(e){
             mintaElem = document.getElementById('minta')
         }
 
         function mintaGeneral(f){
+
             e = f.elements;
             if (mintaElem){
                 // for (let i = 0; i < e.length; i++) {
@@ -109,22 +159,16 @@
             }
         }
         function mintaMozog(f){
+            
+            let divBorder = document.getElementsByClassName('left')[0];
+            
+            if(!reachedBorder) mintaX += 2; else mintaX -= 2;
+            
+            mintaElem.innerHTML = `<h1>${mintaX}</h1>`;
+            mintaElem.style.left = `${mintaX}px`;
 
+            if (mintaX >= divBorder.offsetWidth - mintaElem.offsetWidth || mintaX <= 0) reachedBorder = !reachedBorder;
         }
-
-        // const bgRadios = document.querySelectorAll('input[name="bg-color"]');
-        //     bgRadios.forEach(radio => {
-        //         radio.addEventListener('change', function() {
-        //             mintaElem.style.backgroundColor = this.value;
-        //         });
-        //     });
-
-        //     const borderRadios = document.querySelectorAll('input[name="border-color"]');
-        //     borderRadios.forEach(radio => {
-        //         radio.addEventListener('change', function() {
-        //             mintaElem.style.borderColor = this.value;
-        //         });
-        //     });
     </script>
 </body>
 </html>
