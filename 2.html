@@ -43,16 +43,8 @@
         }
         function mintaMozog(f){
             mintaDeg++;
-            
-            let gridContainer = document.getElementsByClassName('grid-container')[0];
-            let gridContainerPaddingLeft = parseInt(window.getComputedStyle(gridContainer).paddingLeft);
-            // console.log(containerPaddingLeft); -> 10px
-            let gridContainerGap = parseInt(window.getComputedStyle(gridContainer).gap);
-            // console.log(gap); -> 30
-            let mintaelemMarginLeft = parseInt(window.getComputedStyle(mintaElem).marginLeft);
-            // console.log(mintaelemMarginLeft); -> 40px
 
-            let containerWidth = divBorder.clientWidth - 2 * containerPadding - 2 * containerMargin;
+            let divBorder = document.getElementsByClassName('left')[0];
             
             if(!reachedBorder) mintaX += 2; else mintaX -= 2;
             
@@ -60,7 +52,7 @@
             mintaElem.style.left = `${mintaX}px`;
             mintaElem.style.transform = `rotate(${mintaDeg}deg)`;
 
-            if (mintaX >= containerWidth - mintaElem.offsetWidth || mintaX <= 0) reachedBorder = !reachedBorder;
+            if (mintaX >= divBorder.offsetWidth - mintaElem.offsetWidth || mintaX <= 0) reachedBorder = !reachedBorder;
         }
     </script>
 
@@ -71,8 +63,6 @@
         .grid-container {
             display: grid;
             grid-template-areas: 'left right right right';
-            gap: 30px; /* Grid gap */
-            padding: 10px; /* Padding of the grid container */
         }
 
         #minta{
@@ -80,7 +70,7 @@
             height: 200px;
             background-color: white;
             border: 4px solid black;
-            /* margin: 0; */
+            margin: 0;
         }
 
         .right{
