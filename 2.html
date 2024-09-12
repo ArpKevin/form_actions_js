@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
+    <style id="inlineCSS"></style>
     <script>
         let counter = 0;
         let mintaX = 0;
@@ -13,63 +14,103 @@
         let reachedBorder = false;
 
 
-        window.onload = function(e){
+        window.onload = function (e) {
             mintaElem = document.getElementById('minta');
             mintaGeneral(document.querySelector('form'));
+            melyikElemVar = document.getElementById('melyikElem');
         }
 
         // REGEX SOLUTION
-        // function kebabToCamel(kebab) {
-        //     return kebab.replace(/-./g, match => match.charAt(1).toUpperCase());
-        // }
+        function kebabToCamel(kebab) {
+            return kebab.replace(/-./g, match => match.charAt(1).toUpperCase());
+        }
 
 
-        // function mintaGeneral(f) {
-        //     const e = f.elements;
-        //     if (mintaElem) {
-        //         for (let i = 0; i < e.length; i++) {
-        //             if (e[i].type.toUpperCase() !== "RADIO" || e[i].checked) {
-        //                 let property = e[i].name;
-        //                 let value = e[i].value;
+        function mintaGeneral(f) {
+            const e = f.elements;
+            if (mintaElem) {
+                for (let i = 0; i < e.length; i++) {
+                    if (e[i].type.toUpperCase() !== "RADIO" || e[i].checked) {
+                        let property = e[i].name;
+                        let value = e[i].value;
 
-        //                 console.log(property)
-        //                 console.log(value)
+                        // console.log(property)
+                        // console.log(value)
 
-        //                 let jsProperty = kebabToCamel(property);
+                        let jsProperty = kebabToCamel(property);
 
-        //                 mintaElem.style[jsProperty] = value;
+                        mintaElem.style[jsProperty] = value;
 
-        //                 console.log(kebabToCamel("background-color-test"));
-        //             }
-        //         }
-        //     }
-        // }
+                        // console.log(kebabToCamel("background-color-test"));
+                    }
+                }
+            }
+            miniCss.ment();
+        }
 
-        function mintaMozog(f){
+        function mintaMozog(f) {
             mintaDeg++;
 
             let divBorder = document.getElementsByClassName('left')[0];
-            
-            if(!reachedBorder) mintaX += 2; else mintaX -= 2;
-            
+
+            if (!reachedBorder) mintaX += 2; else mintaX -= 2;
+
             mintaElem.innerHTML = `<h1>${mintaX}</h1>`;
             mintaElem.style.left = `${mintaX}px`;
             mintaElem.style.transform = `rotate(${mintaDeg}deg)`;
 
             if (mintaX >= divBorder.offsetWidth - mintaElem.offsetWidth || mintaX <= 0) reachedBorder = !reachedBorder;
         }
+
+        let melyikElemVar = null;
+
+        const miniCss = {
+            elemek: { "h1": null, "p": null, "mark": null },
+            beolvas: function () {
+                document.title = `${melyikElem.value} beolvas`;
+                mintaForm.reset();
+                if (this.elemek[melyikElem.value])
+                    for (const e of this.elemek[melyikElem.value]) {
+                        let cssPropVal = e.split(":");
+                        mintaForm[cssPropVal[0]].value = cssPropVal[1];
+                    }
+                mintaGeneral(mintaForm);
+            },
+            ment: function () {
+                document.title = `${melyikElem.value} ment`;
+                this.elemek[melyikElem.value] = [];
+                if (mintaElem) for (const fe of mintaForm) if (fe.checked) this.elemek[melyikElem.value].push(`${fe.name}:${fe.value}`);
+            },
+            frissit: function () {
+                document.title = `${melyikElem.value} frissít`;
+                let is = document.getElementById('inlineCSS');
+                is.innerHTML = "";
+                for (let [k, v] of Object.entries(this.elemek)) if (v) {
+                    let s = v.toString();
+                    is.innerHTML += k + " {" + (v != null ? s.replaceAll(",", ";") : '');
+                    is.innerHTML += "}\n";
+                }
+                console.log(is.innerHTML);
+            }
+
+        }
     </script>
 
     <style>
-        .left{grid-area: left;}
-        .right{grid-area: right;}
+        .left {
+            grid-area: left;
+        }
+
+        .right {
+            grid-area: right;
+        }
 
         .grid-container {
             display: grid;
             grid-template-areas: 'left right right right';
         }
 
-        #minta{
+        #minta {
             width: 200px;
             height: 200px;
             background-color: white;
@@ -77,29 +118,37 @@
             margin: 0;
         }
 
-        .right{
+        .greyBgForm {
             background-color: grey;
         }
 
-        #minta{
+        #minta {
             display: flex;
             align-items: center;
             justify-content: center;
         }
     </style>
 </head>
+
 <body>
     <div class="grid-container">
         <div class="left" style="position: relative;">
-            <figure id="minta" style="position: absolute;" onclick="if(mintaTimer === null) { mintaTimer=setInterval(mintaMozog, 50); }">
+            <figure id="minta" style="position: absolute;"
+                onclick="if(mintaTimer === null) { mintaTimer=setInterval(mintaMozog, 50); }">
                 <h1>TEXT</h1>
             </figure>
         </div>
         <div class="right">
-            <form onchange="mintaGeneral(this)">
+            <select id="melyikElem" onchange="miniCss.beolvas()" style="margin-bottom: 10px;">
+                <option value="h1">H1</option>
+                <option value="p">P</option>
+                <option value="mark">MARK</option>
+            </select>
+            <button onclick="miniCss.frissit()">CSS Frissít</button>
+            <form onchange="mintaGeneral(this)" class="greyBgForm" name="mintaEditor" id="mintaForm">
                 <fieldset>
                     <legend>Szín:</legend>
-                    
+
                     <input type="radio" id="color-gray" name="color" value="gray">
                     <label for="color-gray">Gray</label>
                     <input type="radio" id="color-red" name="color" value="red">
@@ -110,7 +159,7 @@
 
                 <fieldset>
                     <legend>Háttér:</legend>
-                    
+
                     <input type="radio" id="bg-gray" name="background-color" value="gray">
                     <label for="bg-gray">Gray</label>
                     <input type="radio" id="bg-red" name="background-color" value="red">
@@ -118,10 +167,10 @@
                     <input type="radio" id="bg-blue" name="background-color" value="blue">
                     <label for="bg-blue">Blue</label>
                 </fieldset>
-    
+
                 <fieldset>
                     <legend>Szegély szín:</legend>
-                    
+
                     <input type="radio" id="border-gray" name="border-color" value="gray">
                     <label for="border-gray">Gray</label>
                     <input type="radio" id="border-red" name="border-color" value="red">
@@ -132,7 +181,7 @@
 
                 <fieldset>
                     <legend>Szegély stílus:</legend>
-                    
+
                     <input type="radio" id="border-solid" name="border-style" value="solid">
                     <label for="solid">Szilárd</label>
                     <input type="radio" id="border-dotted" name="border-style" value="dotted" checked>
@@ -143,7 +192,7 @@
 
                 <fieldset>
                     <legend>Sarkítás:</legend>
-                    
+
                     <input type="radio" id="border-radius-0" name="border-radius" value="0%">
                     <label for="solid">Nincs</label>
                     <input type="radio" id="border-radius-25" name="border-radius" value="25%">
@@ -154,7 +203,7 @@
 
                 <fieldset>
                     <legend>Árnyék:</legend>
-                    
+
                     <input type="radio" id="border-shadow-0" name="box-shadow" value="0 0 0 0 black">
                     <label for="border-shadow-0">Nincs</label>
                     <input type="radio" id="border-shadow-10" name="box-shadow" value="5px 5px 10px 0 black">
@@ -171,8 +220,14 @@
                     <label><input type="radio" id="transform-50" name="transform" value="rotate(50deg)">50 fok</label>
                 </fieldset>
             </form>
-            
+
         </div>
     </div>
+
+    <h1>CSS Editor</h1>
+    <p>Ez egy bekezdés, ez pedig <mark>kiemelt szöveg</mark> a mondatban</p>
+
+
 </body>
+
 </html>
