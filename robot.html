@@ -1,0 +1,329 @@
+<!-- https://ondepu.com/SULI/adatlap1.htm -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style id="inlineCSS"></style>
+    <script>
+        let counter = 0;
+        let mintaX = 0;
+        let mintaTimer = null;
+        let mintaDeg = 1;
+        let reachedBorder = false;
+
+
+        window.onload = function (e) {
+            mintaElem = document.getElementById('minta');
+            mintaGeneral(document.querySelector('form'));
+            melyikElemVar = document.getElementById('melyikElem');
+        }
+
+        // REGEX SOLUTION
+        function kebabToCamel(kebab) {
+            return kebab.replace(/-./g, match => match.charAt(1).toUpperCase());
+        }
+
+
+        function mintaGeneral(f) {
+            const e = f.elements;
+            if (mintaElem) {
+                for (let i = 0; i < e.length; i++) {
+                    if (e[i].type.toUpperCase() !== "RADIO" || e[i].checked) {
+                        let property = e[i].name;
+                        let value = e[i].value;
+
+                        // console.log(property)
+                        // console.log(value)
+
+                        let jsProperty = kebabToCamel(property);
+
+                        mintaElem.style[jsProperty] = value;
+
+                        // console.log(kebabToCamel("background-color-test"));
+                    }
+                }
+            }
+            miniCss.ment();
+        }
+
+        function mintaMozog(f) {
+            mintaDeg++;
+
+            let divBorder = document.getElementsByClassName('left')[0];
+
+            if (!reachedBorder) mintaX += 2; else mintaX -= 2;
+
+            mintaElem.innerHTML = `<h1>${mintaX}</h1>`;
+            mintaElem.style.left = `${mintaX}px`;
+            mintaElem.style.transform = `rotate(${mintaDeg}deg)`;
+
+            if (mintaX >= divBorder.offsetWidth - mintaElem.offsetWidth || mintaX <= 0) reachedBorder = !reachedBorder;
+        }
+
+        let melyikElemVar = null;
+
+        const miniCss = {
+            elemek: { "h1": null, "p": null, "mark": null },
+            
+            // ALT METHOD
+            // beolvas: function () {
+            //     document.title = `${melyikElem.value} beolvas`;
+            //     mintaForm.reset();
+            //     if (this.elemek[melyikElem.value])
+            //         for (const e of this.elemek[melyikElem.value]) {
+            //             let cssPropVal = e.split(":");
+            //             mintaForm[cssPropVal[0]].value = cssPropVal[1];
+            //         }
+            //     mintaGeneral(mintaForm);
+            // },
+
+            beolvas : function () 
+                {
+                    let f=document.mintaEditor;  
+                    let e=document.getElementById('melyikElem').value;    
+                    document.title=e.toUpperCase()+" - beolvasva";
+                    f.reset();  
+                    if (this.elemek[e]) for (let i=0;i<this.elemek[e].length;i++) 
+                    {
+                    let p=this.elemek[e][i].indexOf(':');  
+                    let n=this.elemek[e][i].slice(0,p);    
+                    f[n].value=this.elemek[e][i].slice(p+1);       
+                    //console.log(i,n)  
+                    };
+                    mintaGeneral(mintaForm);
+                },
+            ment: function () {
+                document.title = `${melyikElem.value} ment`;
+                this.elemek[melyikElem.value] = [];
+                if (mintaElem) for (const fe of mintaForm) if (fe.checked) this.elemek[melyikElem.value].push(`${fe.name}:${fe.value}`);
+            },
+            frissit: function () {
+                document.title = `${melyikElem.value} frissít`;
+                let is = document.getElementById('inlineCSS');
+                is.innerHTML = "";
+                for (let [k, v] of Object.entries(this.elemek)) if (v) {
+                    let s = v.toString();
+                    is.innerHTML += k + " {" + (v != null ? s.replaceAll(",", ";") : '');
+                    is.innerHTML += "}\n";
+                }
+                console.log(is.innerHTML);
+            }
+
+        }
+    </script>
+
+    <style>
+        .left {
+            grid-area: left;
+        }
+
+        .right {
+            grid-area: right;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-areas: 'left right right right';
+        }
+
+        #minta {
+            width: 200px;
+            height: 200px;
+            background-color: white;
+            border: 4px solid black;
+            margin: 0;
+        }
+
+        .greyBgForm {
+            background-color: grey;
+        }
+
+        #minta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .robot{
+            margin:50px;
+            position: relative;
+            width: 140px;
+            height: 300px;
+        }
+
+        .robot div {
+            border: 1px solid black;
+            position: absolute;
+        }
+
+        .bkar, .jkar{
+            width: 20px;
+            height: 120px;
+            top:51px;
+        }
+        .test{
+            width: 100px;
+            left: 21px;
+            top: 51px;
+            height: 100px;
+        }
+        .jkar{
+            left:122px;
+        }
+
+        .blab, .jlab {
+            width: 20px;
+            height: 80px;
+            top: 152px;
+        }
+        .blab {
+            left:40px;
+        }
+        .jlab {
+            left:80px;
+        }
+
+        .bszem, .jszem {
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+            top: 7px;
+        }
+
+        .fej{
+            width: 50px;
+            height: 50px;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50%;
+        }
+
+        .bszem{
+            left:7px;
+        }
+        .jszem{
+            right: 7px;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="grid-container">
+        <div class="left" style="position: relative;">
+            <figure id="minta" style="position: absolute;"
+                onclick="if(mintaTimer === null) { mintaTimer=setInterval(mintaMozog, 50); }">
+                <h1>TEXT</h1>
+            </figure>
+        </div>
+        <div class="right">
+            <select id="melyikElem" onchange="miniCss.beolvas()" style="margin-bottom: 10px;">
+                <option value="h1">H1</option>
+                <option value="p">P</option>
+                <option value="mark">MARK</option>
+            </select>
+            <button onclick="miniCss.frissit()">CSS Frissít</button>
+            <form onchange="mintaGeneral(this)" class="greyBgForm" name="mintaEditor" id="mintaForm">
+                <fieldset>
+                    <legend>Szín:</legend>
+
+                    <input type="radio" id="color-gray" name="color" value="gray">
+                    <label for="color-gray">Gray</label>
+                    <input type="radio" id="color-red" name="color" value="red">
+                    <label for="color-red">Red</label>
+                    <input type="radio" id="color-blue" name="color" value="blue">
+                    <label for="color-blue">Blue</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Háttér:</legend>
+
+                    <input type="radio" id="bg-gray" name="background-color" value="gray">
+                    <label for="bg-gray">Gray</label>
+                    <input type="radio" id="bg-red" name="background-color" value="red">
+                    <label for="bg-red">Red</label>
+                    <input type="radio" id="bg-blue" name="background-color" value="blue">
+                    <label for="bg-blue">Blue</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Szegély szín:</legend>
+
+                    <input type="radio" id="border-gray" name="border-color" value="gray">
+                    <label for="border-gray">Gray</label>
+                    <input type="radio" id="border-red" name="border-color" value="red">
+                    <label for="border-red">Red</label>
+                    <input type="radio" id="border-blue" name="border-color" value="blue">
+                    <label for="border-blue">Blue</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Szegély stílus:</legend>
+
+                    <input type="radio" id="border-solid" name="border-style" value="solid">
+                    <label for="solid">Szilárd</label>
+                    <input type="radio" id="border-dotted" name="border-style" value="dotted" checked>
+                    <label for="dotted">Pontozott</label>
+                    <input type="radio" id="border-double" name="border-style" value="double">
+                    <label for="double">Dupla</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Sarkítás:</legend>
+
+                    <input type="radio" id="border-radius-0" name="border-radius" value="0%">
+                    <label for="solid">Nincs</label>
+                    <input type="radio" id="border-radius-25" name="border-radius" value="25%">
+                    <label for="dotted">25%</label>
+                    <input type="radio" id="border-radius-50" name="border-radius" value="50%" checked>
+                    <label for="double">50%</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Árnyék:</legend>
+
+                    <input type="radio" id="border-shadow-0" name="box-shadow" value="0 0 0 0 black">
+                    <label for="border-shadow-0">Nincs</label>
+                    <input type="radio" id="border-shadow-10" name="box-shadow" value="5px 5px 10px 0 black">
+                    <label for="border-shadow-10">10 px</label>
+                    <input type="radio" id="border-shadow-20" name="box-shadow" value="10px 10px 20px 0 black">
+                    <label for="border-shadow-20">20 px</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Forgatás:</legend>
+
+                    <label><input type="radio" id="transform-0" name="transform" value="rotate(0deg)">Nincs</label>
+                    <label><input type="radio" id="transform-25" name="transform" value="rotate(25deg)">25 fok</label>
+                    <label><input type="radio" id="transform-50" name="transform" value="rotate(50deg)">50 fok</label>
+                </fieldset>
+            </form>
+
+        </div>
+    </div>
+
+    <h1>CSS Editor</h1>
+    <p>Ez egy bekezdés, ez pedig <mark>kiemelt szöveg</mark> a mondatban</p>
+
+    <div class="robot">
+        <div class="fej">
+            <div class="bszem"></div>
+            <div class="jszem"></div>
+        </div>
+        <div class="bkar"></div>
+        <div class="test"></div>
+        <div class="jkar"></div>
+        <div class="blab"></div>
+        <div class="jlab"></div>
+    </div>
+
+
+</body>
+
+</html>
