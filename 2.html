@@ -1,3 +1,4 @@
+<!-- https://ondepu.com/SULI/adatlap1.htm -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -66,16 +67,34 @@
 
         const miniCss = {
             elemek: { "h1": null, "p": null, "mark": null },
-            beolvas: function () {
-                document.title = `${melyikElem.value} beolvas`;
-                mintaForm.reset();
-                if (this.elemek[melyikElem.value])
-                    for (const e of this.elemek[melyikElem.value]) {
-                        let cssPropVal = e.split(":");
-                        mintaForm[cssPropVal[0]].value = cssPropVal[1];
-                    }
-                mintaGeneral(mintaForm);
-            },
+            
+            // ALT METHOD
+            // beolvas: function () {
+            //     document.title = `${melyikElem.value} beolvas`;
+            //     mintaForm.reset();
+            //     if (this.elemek[melyikElem.value])
+            //         for (const e of this.elemek[melyikElem.value]) {
+            //             let cssPropVal = e.split(":");
+            //             mintaForm[cssPropVal[0]].value = cssPropVal[1];
+            //         }
+            //     mintaGeneral(mintaForm);
+            // },
+
+            beolvas : function () 
+                {
+                    let f=document.mintaEditor;  
+                    let e=document.getElementById('melyikElem').value;    
+                    document.title=e.toUpperCase()+" - beolvasva";
+                    f.reset();  
+                    if (this.elemek[e]) for (let i=0;i<this.elemek[e].length;i++) 
+                    {
+                    let p=this.elemek[e][i].indexOf(':');  
+                    let n=this.elemek[e][i].slice(0,p);    
+                    f[n].value=this.elemek[e][i].slice(p+1);       
+                    //console.log(i,n)  
+                    };
+                    mintaGeneral(mintaForm);
+                },
             ment: function () {
                 document.title = `${melyikElem.value} ment`;
                 this.elemek[melyikElem.value] = [];
